@@ -11,7 +11,7 @@ module RLS
       if rel.respond_to? :table_name
         rel.table_name
       else
-        quote_table_name(rel)
+        ActiveRecord::Base.connection.quote_table_name(rel)
       end
     end
 
