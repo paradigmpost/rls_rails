@@ -8,15 +8,11 @@ module RLS
     end
 
     def derive_rel_tbl rel
-
       if rel.respond_to? :table_name
         rel.table_name
       else
-        rel_klass = rel.to_s.classify.constantize
-        rel_klass.table_name
+        quote_table_name(rel)
       end
-    rescue NameError
-      rel.to_s.pluralize
     end
 
     def last_version_of table
