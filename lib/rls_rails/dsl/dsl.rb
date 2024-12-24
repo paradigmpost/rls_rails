@@ -23,15 +23,8 @@ module RLS
     self.policies[table.to_sym].values.map(&:to_drop_sql).join("\n\n\n")
   end
 
-  def self.policies_for(tbl_name, disableable: true, &block)
+  def self.policies_for(tbl_name, &block)
     definition_proxy = PolicyFactory.new tbl_name.to_sym
-
-    if disableable
-      definition_proxy.instance_eval do
-        self.disableable
-      end
-    end
-
     definition_proxy.instance_eval(&block)
   end
 end

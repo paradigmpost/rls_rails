@@ -13,16 +13,6 @@ module RLS
       RLS.policies[@tbl_name][policy_name.to_sym] = policy
     end
 
-    def disableable &block
-      p = policy :all_when_disabled_rls do
-        using <<-SQL
-    rls_disabled()
-        SQL
-      end
-      p.instance_eval(&block) if block_given?
-      p
-    end
-
     def using_tenant &block
       p = policy :match_tenant do
         using <<-SQL
