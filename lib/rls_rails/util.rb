@@ -11,8 +11,19 @@ module RLS
       if rel.respond_to? :table_name
         rel.table_name
       else
-        ActiveRecord::Base.connection.quote_table_name(rel)
+        rel_s = rel.to_s
+        rel_klass = rel_s.classify.constantize
+
+        rel_parts = rel_s.split('.')
+        schema_parts = rel_parts[0,rel_parts.length-1]
+        ActiveRecord::Base.connection.quote_table_name schema_parts.push(rel_klass.table_name).join('.')
       end
+    rescue NameError
+      rel_s = rel.to_s
+
+      rel_parts = rel_s.split('.')
+      schema_prefix = rel_parts[0,rel_parts.length-1]
+      ActiveRecord::Base.connection.quote_table_name schema_parts.push(rel_s.pluralize).join('.')
     end
 
     def last_version_of table
