@@ -63,7 +63,6 @@ module RLS
 
     def do_create_policy table, version: nil
       RLS.clear_policies!
-      enable_rls table, force: true
       load policy_path(table, version)
       perform_query RLS.create_sql(table)
     end
