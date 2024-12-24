@@ -75,12 +75,12 @@ module RLS
     end
 
     def do_enable_rls table, force: false
-      q = "ALTER TABLE #{table} ENABLE ROW LEVEL SECURITY#{force ? ', FORCE ROW LEVEL SECURITY' : ''};"
+      q = "ALTER TABLE #{quote_table_name(table)} ENABLE ROW LEVEL SECURITY#{force ? ', FORCE ROW LEVEL SECURITY' : ''};"
       perform_query q
     end
 
     def do_disable_rls table, force: false
-      q = "ALTER TABLE #{table} DISABLE ROW LEVEL SECURITY#{force ? ', NO FORCE ROW LEVEL SECURITY' : ''};"
+      q = "ALTER TABLE #{quote_table_name(table)} DISABLE ROW LEVEL SECURITY#{force ? ', NO FORCE ROW LEVEL SECURITY' : ''};"
       perform_query q
     end
 
