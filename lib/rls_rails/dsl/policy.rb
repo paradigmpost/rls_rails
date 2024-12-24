@@ -72,7 +72,7 @@ module RLS
 
     def to_create_sql
       tos = @to.map(&:to_s).join(', ').upcase
-      q =  "CREATE POLICY #{@policy} ON #{@tbl}\n"
+      q =  "CREATE POLICY \"#{@policy}\" ON #{@tbl}\n"
       q << "AS #{@permissive ? 'PERMISSIVE' : 'RESTRICTIVE'}\n" unless @permissive
       q << "FOR #{@on}\n"
       q << "TO #{tos}\n" if tos != 'PUBLIC'
@@ -82,7 +82,7 @@ module RLS
     end
 
     def to_drop_sql
-      "DROP POLICY IF EXISTS #{@policy} ON #{@tbl};"
+      "DROP POLICY IF EXISTS \"#{@policy}\" ON #{@tbl};"
     end
 
     def tenant_fk

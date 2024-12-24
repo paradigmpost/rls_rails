@@ -57,7 +57,7 @@ module RLS
     def drop_policies_for table
       existing_policies = execute("SELECT policyname FROM pg_policies WHERE tablename = '#{table}'").values.flatten
       existing_policies.each do |policy_name|
-        perform_query "DROP POLICY #{policy_name} ON #{table};"
+        perform_query "DROP POLICY \"#{policy_name}\" ON #{table};"
       end
     end
 
